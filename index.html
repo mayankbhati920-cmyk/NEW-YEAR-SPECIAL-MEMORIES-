@@ -45,7 +45,7 @@ body{
 }
 .active{display:block;}
 
-/* OPENING PAGE */
+/* OPENING */
 #opening{
   background:linear-gradient(180deg,#020617,#000);
 }
@@ -67,8 +67,8 @@ button:active{transform:scale(0.95);}
 /* CARDS */
 .card{
   background:rgba(0,0,0,0.55);
-  padding:20px;
-  margin:14px auto;
+  padding:18px;
+  margin:16px auto;
   border-radius:20px;
   cursor:pointer;
   max-width:360px;
@@ -79,11 +79,25 @@ button:active{transform:scale(0.95);}
   font-weight:700;
 }
 
+/* MENU IMAGES */
+.menu-img{
+  width:100%;
+  max-width:320px;
+  border-radius:16px;
+  margin-bottom:12px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
+  transition:transform 0.3s ease;
+}
+.card:active .menu-img{
+  transform:scale(1.04);
+}
+
 /* IMAGES */
 img{
   width:90%;
   border-radius:14px;
   margin:10px 0;
+  box-shadow:0 10px 25px rgba(0,0,0,0.4);
 }
 </style>
 </head>
@@ -92,7 +106,7 @@ img{
 
 <!-- BACKGROUND VIDEO -->
 <video id="bg-video" muted loop playsinline>
-  <source src="VID-20251231-WA0003.mp4">
+  <source src="background.mp4">
 </video>
 <div id="overlay"></div>
 
@@ -122,9 +136,20 @@ img{
 <div class="page" id="menu">
   <h2>Memory Menu</h2>
 
-  <div class="card" id="m-friendship" onclick="menuGo('friendship')">🤝 Friendship</div>
-  <div class="card" id="m-funny" onclick="menuGo('funny')">😂 Funny Moments</div>
-  <div class="card" id="m-group" onclick="menuGo('group')">📸 Group Photos</div>
+  <div class="card" id="m-friendship" onclick="menuGo('friendship')">
+    <img src="menu-friendship.jpg" class="menu-img">
+    🤝 Friendship
+  </div>
+
+  <div class="card" id="m-funny" onclick="menuGo('funny')">
+    <img src="menu-funny.jpg" class="menu-img">
+    😂 Funny Moments
+  </div>
+
+  <div class="card" id="m-group" onclick="menuGo('group')">
+    <img src="menu-group.jpg" class="menu-img">
+    📸 Group Photos
+  </div>
 
   <div id="menuContinue" style="display:none;">
     <button onclick="go('everyone')">Continue</button>
@@ -211,9 +236,8 @@ img{
 <div class="page" id="commonMessage">
   <h2>For All My Friends 💙</h2>
   <p>
-    We laughed, we fought, we learned, we grew.<br><br>
     No matter where life takes us,<br>
-    these memories will always stay with us.
+    these memories will always stay.
   </p>
   <button onclick="go('memoryVideo')">Continue</button>
 </div>
@@ -224,18 +248,13 @@ img{
   <video controls style="width:90%; border-radius:14px;">
     <source src="memories.mp4">
   </video>
-  <br><br>
   <button onclick="go('finalMessage')">Continue</button>
 </div>
 
 <!-- FINAL MESSAGE -->
 <div class="page" id="finalMessage">
   <h1>🎆 Happy New Year 🎆</h1>
-  <p>
-    May this year bring happiness,<br>
-    health, success and more memories together.
-  </p>
-  <p>— With ❤️</p>
+  <p>May this year bring happiness & success to all of us.</p>
 </div>
 
 <script>
