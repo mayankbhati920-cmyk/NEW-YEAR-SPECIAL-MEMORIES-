@@ -15,7 +15,7 @@ body{
   overflow:hidden;
 }
 
-/* ===== BACKGROUND VIDEO ===== */
+/* BACKGROUND VIDEO */
 #bg-video{
   position:fixed;
   inset:0;
@@ -35,7 +35,7 @@ body{
   display:none;
 }
 
-/* ===== PAGES ===== */
+/* PAGES */
 .page{
   display:none;
   position:fixed;
@@ -45,7 +45,7 @@ body{
 }
 .active{display:block;}
 
-/* ===== BUTTON ===== */
+/* BUTTONS */
 button{
   padding:14px 28px;
   border:none;
@@ -59,7 +59,7 @@ button{
 }
 button:active{transform:scale(0.95);}
 
-/* ===== MENU CARDS ===== */
+/* MENU CARDS */
 .card{
   background:rgba(0,0,0,0.55);
   padding:22px;
@@ -67,7 +67,6 @@ button:active{transform:scale(0.95);}
   border-radius:20px;
   cursor:pointer;
   max-width:360px;
-  transition:.2s;
 }
 .card.active-card{
   background:linear-gradient(135deg,#00ff99,#00cc66);
@@ -75,7 +74,7 @@ button:active{transform:scale(0.95);}
   font-weight:700;
 }
 
-/* ===== CONTENT CARD ===== */
+/* CONTENT CARD */
 .friend-card{
   background:rgba(255,255,255,0.12);
   padding:20px;
@@ -83,6 +82,7 @@ button:active{transform:scale(0.95);}
   border-radius:18px;
   max-width:380px;
 }
+
 video{max-width:90%;border-radius:14px;}
 </style>
 </head>
@@ -173,7 +173,7 @@ video{max-width:90%;border-radius:14px;}
 </div>
 
 <script>
-let lastMenu = null;
+let lastMenu=null;
 const bgVideo=document.getElementById("bg-video");
 const overlay=document.getElementById("overlay");
 const mainMusic=document.getElementById("mainMusic");
@@ -200,7 +200,7 @@ function go(id){
 }
 
 function menuGo(page){
-  lastMenu = page;
+  lastMenu=page;
   updateMenu();
   go(page);
 }
