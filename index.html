@@ -26,11 +26,11 @@ body{
   display:none;
 }
 
-/* OVERLAY */
+/* DARK OVERLAY */
 #overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,0.55);
+  background:rgba(0,0,0,0.6);
   z-index:-1;
   display:none;
 }
@@ -44,6 +44,11 @@ body{
   overflow:auto;
 }
 .active{display:block;}
+
+/* OPENING PAGE */
+#opening{
+  background:linear-gradient(180deg,#020617,#000);
+}
 
 /* BUTTONS */
 button{
@@ -59,11 +64,11 @@ button{
 }
 button:active{transform:scale(0.95);}
 
-/* MENU CARDS */
+/* CARDS */
 .card{
   background:rgba(0,0,0,0.55);
-  padding:22px;
-  margin:18px auto;
+  padding:20px;
+  margin:14px auto;
   border-radius:20px;
   cursor:pointer;
   max-width:360px;
@@ -74,16 +79,12 @@ button:active{transform:scale(0.95);}
   font-weight:700;
 }
 
-/* CONTENT CARD */
-.friend-card{
-  background:rgba(255,255,255,0.12);
-  padding:20px;
-  margin:15px auto;
-  border-radius:18px;
-  max-width:380px;
+/* IMAGES */
+img{
+  width:90%;
+  border-radius:14px;
+  margin:10px 0;
 }
-
-video{max-width:90%;border-radius:14px;}
 </style>
 </head>
 
@@ -120,9 +121,14 @@ video{max-width:90%;border-radius:14px;}
 <!-- MENU -->
 <div class="page" id="menu">
   <h2>Memory Menu</h2>
+
   <div class="card" id="m-friendship" onclick="menuGo('friendship')">🤝 Friendship</div>
   <div class="card" id="m-funny" onclick="menuGo('funny')">😂 Funny Moments</div>
   <div class="card" id="m-group" onclick="menuGo('group')">📸 Group Photos</div>
+
+  <div id="menuContinue" style="display:none;">
+    <button onclick="go('everyone')">Continue</button>
+  </div>
 </div>
 
 <!-- FRIENDSHIP -->
@@ -143,33 +149,93 @@ video{max-width:90%;border-radius:14px;}
 <div class="page" id="group">
   <h2>Group Photos</h2>
   <p>Moments together</p>
-  <button onclick="go('everyone')">Continue</button>
+  <button onclick="backToMenu()">Back</button>
 </div>
 
 <!-- EVERYONE -->
 <div class="page" id="everyone">
   <h2>Everyone 💙</h2>
-  <p>This page is for all of you</p>
-  <button onclick="go('allfriends')">Continue</button>
-</div>
 
-<!-- ALL FRIENDS MESSAGE -->
-<div class="page" id="allfriends">
-  <h2>For All My Friends 💙</h2>
-  <div class="friend-card">
-    Different paths, different dreams,<br>
-    but one bond forever.<br><br>
-    Thank you for being part of my life.
+  <div class="card" onclick="goFriend('mahesh1')">Mahesh Bishnoi</div>
+  <div class="card" onclick="goFriend('f2_1')">Friend 2</div>
+  <div class="card" onclick="goFriend('f3_1')">Friend 3</div>
+  <div class="card" onclick="goFriend('f4_1')">Friend 4</div>
+  <div class="card" onclick="goFriend('f5_1')">Friend 5</div>
+  <div class="card" onclick="goFriend('f6_1')">Friend 6</div>
+  <div class="card" onclick="goFriend('f7_1')">Friend 7</div>
+  <div class="card" onclick="goFriend('f8_1')">Friend 8</div>
+
+  <div id="everyoneContinue" style="display:none;">
+    <button onclick="go('commonMessage')">Continue</button>
   </div>
-  <button onclick="go('final')">Continue</button>
 </div>
 
-<!-- FINAL MEMORY -->
-<div class="page" id="final">
-  <h2>Final Memories 🎥</h2>
-  <video controls>
+<!-- MAHESH -->
+<div class="page" id="mahesh1">
+  <h2>Mahesh Bishnoi 💙</h2>
+  <img src="mahesh1.jpg">
+  <img src="mahesh2.jpg">
+  <button onclick="go('mahesh2')">Continue</button>
+</div>
+
+<div class="page" id="mahesh2">
+  <h2>More Memories with Mahesh ✨</h2>
+  <img src="mahesh3.jpg">
+  <img src="mahesh4.jpg">
+  <button onclick="backToEveryone()">Back</button>
+</div>
+
+<!-- FRIEND 2–8 -->
+<div class="page" id="f2_1"><h2>Friend 2</h2><img src="f2_1.jpg"><button onclick="go('f2_2')">Continue</button></div>
+<div class="page" id="f2_2"><h2>More Memories</h2><img src="f2_2.jpg"><button onclick="backToEveryone()">Back</button></div>
+
+<div class="page" id="f3_1"><h2>Friend 3</h2><img src="f3_1.jpg"><button onclick="go('f3_2')">Continue</button></div>
+<div class="page" id="f3_2"><h2>More Memories</h2><img src="f3_2.jpg"><button onclick="backToEveryone()">Back</button></div>
+
+<div class="page" id="f4_1"><h2>Friend 4</h2><img src="f4_1.jpg"><button onclick="go('f4_2')">Continue</button></div>
+<div class="page" id="f4_2"><h2>More Memories</h2><img src="f4_2.jpg"><button onclick="backToEveryone()">Back</button></div>
+
+<div class="page" id="f5_1"><h2>Friend 5</h2><img src="f5_1.jpg"><button onclick="go('f5_2')">Continue</button></div>
+<div class="page" id="f5_2"><h2>More Memories</h2><img src="f5_2.jpg"><button onclick="backToEveryone()">Back</button></div>
+
+<div class="page" id="f6_1"><h2>Friend 6</h2><img src="f6_1.jpg"><button onclick="go('f6_2')">Continue</button></div>
+<div class="page" id="f6_2"><h2>More Memories</h2><img src="f6_2.jpg"><button onclick="backToEveryone()">Back</button></div>
+
+<div class="page" id="f7_1"><h2>Friend 7</h2><img src="f7_1.jpg"><button onclick="go('f7_2')">Continue</button></div>
+<div class="page" id="f7_2"><h2>More Memories</h2><img src="f7_2.jpg"><button onclick="backToEveryone()">Back</button></div>
+
+<div class="page" id="f8_1"><h2>Friend 8</h2><img src="f8_1.jpg"><button onclick="go('f8_2')">Continue</button></div>
+<div class="page" id="f8_2"><h2>More Memories</h2><img src="f8_2.jpg"><button onclick="backToEveryone()">Back</button></div>
+
+<!-- COMMON MESSAGE -->
+<div class="page" id="commonMessage">
+  <h2>For All My Friends 💙</h2>
+  <p>
+    We laughed, we fought, we learned, we grew.<br><br>
+    No matter where life takes us,<br>
+    these memories will always stay with us.
+  </p>
+  <button onclick="go('memoryVideo')">Continue</button>
+</div>
+
+<!-- MEMORY VIDEO -->
+<div class="page" id="memoryVideo">
+  <h2>Our Memories 🎥</h2>
+  <video controls style="width:90%; border-radius:14px;">
     <source src="memories.mp4">
   </video>
+  <br><br>
+  <button onclick="go('finalMessage')">Continue</button>
+</div>
+
+<!-- FINAL MESSAGE -->
+<div class="page" id="finalMessage">
+  <h1>🎆 Happy New Year 🎆</h1>
+  <p>
+    May this year bring happiness,<br>
+    health, success and more memories together.
+  </p>
+  <p>— With ❤️</p>
 </div>
 
 <script>
@@ -178,6 +244,8 @@ const bgVideo=document.getElementById("bg-video");
 const overlay=document.getElementById("overlay");
 const mainMusic=document.getElementById("mainMusic");
 const clickSound=document.getElementById("clickSound");
+const menuContinue=document.getElementById("menuContinue");
+const everyoneContinue=document.getElementById("everyoneContinue");
 
 function playClick(){
   clickSound.currentTime=0;
@@ -202,6 +270,9 @@ function go(id){
 function menuGo(page){
   lastMenu=page;
   updateMenu();
+  if(page==="group"){
+    menuContinue.style.display="block";
+  }
   go(page);
 }
 
@@ -215,6 +286,15 @@ function updateMenu(){
   if(lastMenu){
     document.getElementById('m-'+lastMenu).classList.add('active-card');
   }
+}
+
+function goFriend(id){
+  go(id);
+}
+
+function backToEveryone(){
+  everyoneContinue.style.display="block";
+  go('everyone');
 }
 </script>
 
