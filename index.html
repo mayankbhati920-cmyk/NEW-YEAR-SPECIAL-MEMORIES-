@@ -12,6 +12,7 @@ body{
   font-family:Segoe UI, sans-serif;
   color:white;
   text-align:center;
+  overflow:hidden; /* stop scrolling */
 }
 
 /* ===== BACKGROUND VIDEO ===== */
@@ -22,7 +23,7 @@ body{
   height:100%;
   object-fit:cover;
   z-index:-2;
-  display:none; /* hidden until start */
+  display:none;
 }
 
 /* DARK OVERLAY */
@@ -37,29 +38,12 @@ body{
 /* ===== PAGES ===== */
 .page{
   display:none;
-  min-height:100vh;
+  position:fixed;
+  inset:0;
   padding:40px 20px;
+  overflow:auto;
 }
 .active{display:block;}
-
-/* ===== OPENING PAGE STYLE ===== */
-#opening{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-  background:linear-gradient(180deg,#020617,#000);
-}
-
-#opening h1{
-  font-size:2.6em;
-  margin-bottom:10px;
-}
-#opening p{
-  opacity:0.85;
-  max-width:300px;
-}
 
 /* ===== BUTTONS ===== */
 button{
@@ -67,7 +51,7 @@ button{
   border:none;
   border-radius:30px;
   font-size:16px;
-  margin:15px;
+  margin:10px;
   background:linear-gradient(135deg,#ff4d6d,#ffd166);
   color:#000;
   font-weight:600;
@@ -75,7 +59,7 @@ button{
 }
 button:active{transform:scale(0.95);}
 
-/* ===== CARDS ===== */
+/* ===== MENU CARDS ===== */
 .card{
   background:rgba(0,0,0,0.55);
   padding:22px;
@@ -83,8 +67,17 @@ button:active{transform:scale(0.95);}
   border-radius:20px;
   cursor:pointer;
   max-width:360px;
+  transition:.2s;
 }
 
+/* GREEN when active */
+.card.active-card{
+  background:linear-gradient(135deg,#00ff99,#00cc66);
+  color:#000;
+  font-weight:700;
+}
+
+/* ===== CONTENT CARDS ===== */
 .friend-card{
   background:rgba(255,255,255,0.12);
   padding:20px;
@@ -102,13 +95,13 @@ video{
 
 <body>
 
-<!-- 🎥 BACKGROUND VIDEO (STARTS AFTER CLICK) -->
+<!-- BACKGROUND VIDEO -->
 <video id="bg-video" muted loop playsinline>
   <source src="VID-20251231-WA0003.mp4" type="video/mp4">
 </video>
 <div id="overlay"></div>
 
-<!-- 🔊 AUDIO -->
+<!-- AUDIO -->
 <audio id="mainMusic" loop>
   <source src="music.mp3">
 </audio>
@@ -116,14 +109,14 @@ video{
   <source src="click.mp3">
 </audio>
 
-<!-- ===== OPENING PAGE ===== -->
+<!-- OPENING -->
 <div class="page active" id="opening">
   <h1>✨ Welcome ✨</h1>
-  <p>A small surprise made with memories, friendship and love.</p>
+  <p>A small surprise made with memories & friendship</p>
   <button onclick="startCelebration()">Start Celebration 🎉</button>
 </div>
 
-<!-- ===== MAIN GREETING ===== -->
+<!-- GREETING -->
 <div class="page" id="open">
   <h1>🎆 Happy New Year 🎆</h1>
   <p>This is for my friends ❤️</p>
@@ -133,9 +126,9 @@ video{
 <!-- MENU -->
 <div class="page" id="menu">
   <h2>Memory Menu</h2>
-  <div class="card" onclick="go('friendship')">🤝 Friendship</div>
-  <div class="card" onclick="go('funny')">😂 Funny Moments</div>
-  <div class="card" onclick="go('group')">📸 Group Photos</div>
+  <div class="card" data-target="friendship" onclick="menuGo(this,'friendship')">🤝 Friendship</div>
+  <div class="card" data-target="funny" onclick="menuGo(this,'funny')">😂 Funny Moments</div>
+  <div class="card" data-target="group" onclick="menuGo(this,'group')">📸 Group Photos</div>
 </div>
 
 <!-- FRIENDSHIP -->
@@ -164,44 +157,24 @@ video{
 <div class="page" id="everyone">
   <h2>Everyone 💙</h2>
   <div class="card" onclick="openFriend('aman')">Aman</div>
-  <div class="card" onclick="openFriend('rohit')">Rohit</div>
-  <div class="card" onclick="openFriend('rahul')">Rahul</div>
   <button onclick="go('group')">Previous</button>
-  <button onclick="go('allfriends')">Continue</button>
 </div>
 
-<!-- COMMON MESSAGE -->
-<div class="page" id="allfriends">
-  <h2>For All My Friends 💙</h2>
-  <div class="friend-card">
-    Different lives, different paths —  
-    but one bond that never changes.<br><br>
-    <b>Thank you for being part of my life.</b>
-  </div>
-  <button onclick="go('everyone')">Previous</button>
-  <button onclick="go('story1')">Continue</button>
-</div>
-
-<!-- STORY -->
-<div class="page" id="story1">
-  <h2>More Memories</h2>
-  <button onclick="go('allfriends')">Previous</button>
-  <button onclick="go('story2')">Next</button>
-</div>
-
-<div class="page" id="story2">
-  <h2>Final Memories 🎥</h2>
-  <video controls>
-    <source src="memories.mp4">
-  </video>
-  <button onclick="go('story1')">Previous</button>
+<!-- FRIEND PAGE -->
+<div class="page" id="aman">
+  <audio id="amanMusic" loop>
+    <source src="aman.mp3">
+  </audio>
+  <h2>Aman</h2>
+  <div class="friend-card">Always calm & strong</div>
+  <button onclick="closeFriend()">Back</button>
 </div>
 
 <script>
-const clickSound=document.getElementById("clickSound");
 const bgVideo=document.getElementById("bg-video");
 const overlay=document.getElementById("overlay");
 const mainMusic=document.getElementById("mainMusic");
+const clickSound=document.getElementById("clickSound");
 
 function playClick(){
   clickSound.currentTime=0;
@@ -210,19 +183,25 @@ function playClick(){
 
 function startCelebration(){
   playClick();
-
   bgVideo.style.display="block";
   overlay.style.display="block";
-
   bgVideo.play().catch(()=>{});
   mainMusic.play().catch(()=>{});
-
   go('open');
 }
 
 function go(id){
-  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-  document.getElementById(id).classList.add("active");
+  playClick();
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+/* MENU CLICK → GREEN */
+function menuGo(el,page){
+  playClick();
+  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active-card'));
+  el.classList.add('active-card');
+  go(page);
 }
 
 function openFriend(name){
@@ -230,6 +209,12 @@ function openFriend(name){
   mainMusic.pause();
   go(name);
   document.getElementById(name+"Music").play();
+}
+
+function closeFriend(){
+  document.getElementById("amanMusic").pause();
+  mainMusic.play();
+  go('everyone');
 }
 </script>
 
