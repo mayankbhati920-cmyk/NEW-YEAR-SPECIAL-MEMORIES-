@@ -17,7 +17,8 @@ body{
 /* ===== BACKGROUND VIDEO ===== */
 #bg-video{
   position:fixed;
-  inset:0;
+  top:0;
+  left:0;
   width:100%;
   height:100%;
   object-fit:cover;
@@ -27,7 +28,10 @@ body{
 /* DARK OVERLAY */
 #overlay{
   position:fixed;
-  inset:0;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
   background:rgba(0,0,0,0.55);
   z-index:-1;
 }
@@ -36,11 +40,11 @@ body{
 .page{
   display:none;
   min-height:100vh;
-  padding:40px 20px 100px;
+  padding:40px 20px;
 }
 .active{display:block;}
 
-/* ===== BUTTONS (RESTORED STYLE) ===== */
+/* ===== BUTTONS ===== */
 button{
   padding:14px 28px;
   border:none;
@@ -51,11 +55,9 @@ button{
   color:#000;
   font-weight:600;
   cursor:pointer;
-  transition:transform .15s ease, box-shadow .15s ease;
 }
 button:active{
   transform:scale(0.95);
-  box-shadow:0 0 15px rgba(255,209,102,0.8);
 }
 
 /* ===== CARDS ===== */
@@ -66,10 +68,6 @@ button:active{
   border-radius:20px;
   cursor:pointer;
   max-width:360px;
-  transition:transform .15s ease;
-}
-.card:active{
-  transform:scale(0.97);
 }
 
 .friend-card{
@@ -89,16 +87,19 @@ video{
 
 <body>
 
-<!-- BACKGROUND VIDEO -->
+<!-- ================= BACKGROUND VIDEO (EDIT FILE NAME HERE) ================= -->
 <video id="bg-video" autoplay muted loop playsinline>
-  <source src="background.mp4" type="video/mp4">
+  <!-- 👇 CHANGE ONLY THE FILE NAME IF NEEDED -->
+  <source src="VID-20251231-WA0003.mp4" type="video/mp4">
 </video>
 <div id="overlay"></div>
+<!-- ======================================================================== -->
 
-<!-- SOUNDS -->
+<!-- MUSIC -->
 <audio id="mainMusic" autoplay loop>
   <source src="music.mp3">
 </audio>
+
 <audio id="clickSound">
   <source src="click.mp3">
 </audio>
@@ -113,9 +114,9 @@ video{
 <!-- MENU -->
 <div class="page" id="menu">
   <h2>Memory Menu</h2>
-  <div class="card" onclick="go('friendship')">🤝 Friendship</div>
-  <div class="card" onclick="go('funny')">😂 Funny Moments</div>
-  <div class="card" onclick="go('group')">📸 Group Photos</div>
+  <div class="card" onclick="go('friendship')">Friendship</div>
+  <div class="card" onclick="go('funny')">Funny Moments</div>
+  <div class="card" onclick="go('group')">Group Photos</div>
 </div>
 
 <!-- FRIENDSHIP -->
@@ -162,7 +163,7 @@ video{
   <button onclick="go('story1')">Continue</button>
 </div>
 
-<!-- FRIEND -->
+<!-- FRIEND PAGE -->
 <div class="page" id="aman">
   <audio id="amanMusic" loop>
     <source src="aman.mp3">
@@ -188,19 +189,19 @@ video{
 </div>
 
 <script>
-const clickSound = document.getElementById("clickSound");
+const clickSound=document.getElementById("clickSound");
 function playClick(){
-  clickSound.currentTime = 0;
+  clickSound.currentTime=0;
   clickSound.play();
 }
 
 function go(id){
   playClick();
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
 
-let mainMusic = document.getElementById("mainMusic");
+let mainMusic=document.getElementById("mainMusic");
 
 function openFriend(name){
   playClick();
@@ -211,11 +212,11 @@ function openFriend(name){
 
 function closeFriend(name){
   playClick();
-  let m = document.getElementById(name+"Music");
+  let m=document.getElementById(name+"Music");
   m.pause();
-  m.currentTime = 0;
+  m.currentTime=0;
   mainMusic.play();
-  go('everyone');
+  go("everyone");
 }
 </script>
 
