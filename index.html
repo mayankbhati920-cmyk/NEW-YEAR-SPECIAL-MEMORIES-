@@ -17,23 +17,21 @@ body{
 /* ===== BACKGROUND VIDEO ===== */
 #bg-video{
   position:fixed;
-  top:0;
-  left:0;
+  inset:0;
   width:100%;
   height:100%;
   object-fit:cover;
   z-index:-2;
+  display:none; /* hidden until start */
 }
 
 /* DARK OVERLAY */
 #overlay{
   position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
+  inset:0;
   background:rgba(0,0,0,0.55);
   z-index:-1;
+  display:none;
 }
 
 /* ===== PAGES ===== */
@@ -44,21 +42,38 @@ body{
 }
 .active{display:block;}
 
+/* ===== OPENING PAGE STYLE ===== */
+#opening{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  background:linear-gradient(180deg,#020617,#000);
+}
+
+#opening h1{
+  font-size:2.6em;
+  margin-bottom:10px;
+}
+#opening p{
+  opacity:0.85;
+  max-width:300px;
+}
+
 /* ===== BUTTONS ===== */
 button{
   padding:14px 28px;
   border:none;
   border-radius:30px;
   font-size:16px;
-  margin:10px;
+  margin:15px;
   background:linear-gradient(135deg,#ff4d6d,#ffd166);
   color:#000;
   font-weight:600;
   cursor:pointer;
 }
-button:active{
-  transform:scale(0.95);
-}
+button:active{transform:scale(0.95);}
 
 /* ===== CARDS ===== */
 .card{
@@ -87,36 +102,40 @@ video{
 
 <body>
 
-<!-- ================= BACKGROUND VIDEO (EDIT FILE NAME HERE) ================= -->
-<video id="bg-video" autoplay muted loop playsinline>
-  <!-- 👇 CHANGE ONLY THE FILE NAME IF NEEDED -->
+<!-- 🎥 BACKGROUND VIDEO (STARTS AFTER CLICK) -->
+<video id="bg-video" muted loop playsinline>
   <source src="VID-20251231-WA0003.mp4" type="video/mp4">
 </video>
 <div id="overlay"></div>
-<!-- ======================================================================== -->
 
-<!-- MUSIC -->
-<audio id="mainMusic" autoplay loop>
+<!-- 🔊 AUDIO -->
+<audio id="mainMusic" loop>
   <source src="music.mp3">
 </audio>
-
 <audio id="clickSound">
   <source src="click.mp3">
 </audio>
 
-<!-- OPEN -->
-<div class="page active" id="open">
-  <h1>Happy New Year 🎉</h1>
+<!-- ===== OPENING PAGE ===== -->
+<div class="page active" id="opening">
+  <h1>✨ Welcome ✨</h1>
+  <p>A small surprise made with memories, friendship and love.</p>
+  <button onclick="startCelebration()">Start Celebration 🎉</button>
+</div>
+
+<!-- ===== MAIN GREETING ===== -->
+<div class="page" id="open">
+  <h1>🎆 Happy New Year 🎆</h1>
   <p>This is for my friends ❤️</p>
-  <button onclick="go('menu')">Enter</button>
+  <button onclick="go('menu')">Continue</button>
 </div>
 
 <!-- MENU -->
 <div class="page" id="menu">
   <h2>Memory Menu</h2>
-  <div class="card" onclick="go('friendship')">Friendship</div>
-  <div class="card" onclick="go('funny')">Funny Moments</div>
-  <div class="card" onclick="go('group')">Group Photos</div>
+  <div class="card" onclick="go('friendship')">🤝 Friendship</div>
+  <div class="card" onclick="go('funny')">😂 Funny Moments</div>
+  <div class="card" onclick="go('group')">📸 Group Photos</div>
 </div>
 
 <!-- FRIENDSHIP -->
@@ -155,22 +174,12 @@ video{
 <div class="page" id="allfriends">
   <h2>For All My Friends 💙</h2>
   <div class="friend-card">
-    We may have different paths, dreams and lives,<br><br>
-    but one thing will always remain the same —<br><br>
-    <b>our bond, our memories, and our friendship.</b>
+    Different lives, different paths —  
+    but one bond that never changes.<br><br>
+    <b>Thank you for being part of my life.</b>
   </div>
   <button onclick="go('everyone')">Previous</button>
   <button onclick="go('story1')">Continue</button>
-</div>
-
-<!-- FRIEND PAGE -->
-<div class="page" id="aman">
-  <audio id="amanMusic" loop>
-    <source src="aman.mp3">
-  </audio>
-  <h2>Aman</h2>
-  <div class="friend-card">Always calm & strong</div>
-  <button onclick="closeFriend('aman')">Previous</button>
 </div>
 
 <!-- STORY -->
@@ -190,33 +199,37 @@ video{
 
 <script>
 const clickSound=document.getElementById("clickSound");
+const bgVideo=document.getElementById("bg-video");
+const overlay=document.getElementById("overlay");
+const mainMusic=document.getElementById("mainMusic");
+
 function playClick(){
   clickSound.currentTime=0;
   clickSound.play();
 }
 
-function go(id){
+function startCelebration(){
   playClick();
+
+  bgVideo.style.display="block";
+  overlay.style.display="block";
+
+  bgVideo.play().catch(()=>{});
+  mainMusic.play().catch(()=>{});
+
+  go('open');
+}
+
+function go(id){
   document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
   document.getElementById(id).classList.add("active");
 }
-
-let mainMusic=document.getElementById("mainMusic");
 
 function openFriend(name){
   playClick();
   mainMusic.pause();
   go(name);
   document.getElementById(name+"Music").play();
-}
-
-function closeFriend(name){
-  playClick();
-  let m=document.getElementById(name+"Music");
-  m.pause();
-  m.currentTime=0;
-  mainMusic.play();
-  go("everyone");
 }
 </script>
 
